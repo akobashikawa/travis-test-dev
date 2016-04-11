@@ -12,6 +12,7 @@ before_script:
 script: phpunit Test.php
 after_success:
   - echo 'after success'
+  - git remote add production https://github.com/akobashikawa/travis-test-prod.git
   - git remote -v
   - git push production
 after_script: echo 'after script'
