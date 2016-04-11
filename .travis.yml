@@ -3,6 +3,9 @@ php:
   - 5.5
 sudo: required
 dist: trusty
+after_install:
+  - pwd
+  - php --version
+  - git --version
+  - mysql --version
 script: phpunit Test.php
-after_success:
-  - git push production master
