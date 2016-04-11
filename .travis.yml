@@ -4,8 +4,10 @@ php:
 sudo: required
 #dist: trusty
 before_install: echo 'before install'
-after_install: pwd
-before_script: echo 'before script'
+before_script:
+  - echo 'before script'
+  - pwd
+  - git status
 script: phpunit Test.php
-after_sucess: echo 'after success'
+after_success: echo 'after success'
 after_script: echo 'after script'
