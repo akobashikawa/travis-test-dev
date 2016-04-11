@@ -2,11 +2,12 @@ language: php
 php:
   - 5.5
 sudo: required
-#dist: trusty
+dist: trusty
 before_install: echo 'before install'
 before_script:
   - echo 'before script'
   - pwd
+  - ls -a
   - git status
 script: phpunit Test.php
 after_success: echo 'after success'
