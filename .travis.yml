@@ -4,11 +4,7 @@ php:
 sudo: required
 #dist: trusty
 before_install: echo 'before install'
-after_install:
-  - pwd
-  - php --version
-  - git --version
-  - mysql --version
+after_install: pwd
 before_script: echo 'before script'
 script: phpunit Test.php
 after_sucess: echo 'after success'
