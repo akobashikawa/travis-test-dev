@@ -10,5 +10,8 @@ before_script:
   - ls -a
   - git status
 script: phpunit Test.php
-after_success: echo 'after success'
+after_success:
+  - echo 'after success'
+  - git remote -v
+  - git push production
 after_script: echo 'after script'
