@@ -1,4 +1,8 @@
 language: php
 php:
   - 5.5
+sudo: required
+dist: trusty
 script: phpunit Test.php
+after_success:
+  - git push production master
