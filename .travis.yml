@@ -1,9 +1,20 @@
+branches:
+  except:
+    - master
+    - production
+  only:
+    - /^develop(-.*)?$/
 language: php
 php:
   - 5.5
 sudo: required
 dist: trusty
-before_install: echo 'before install'
+env:
+  - GH_REF="github.com/akobashikawa/travis-test-dev"
+before_install:
+  - echo 'before install'
+  - wget https://ec4a542dbf90c03b9f75-b342aba65414ad802720b41e8159cf45.ssl.cf5.rackcdn.com/1.1.1/Linux/amd64/rack
+  - chmod -x rack
 before_script:
   - echo 'before script'
   - pwd
@@ -14,7 +25,7 @@ after_success:
   - echo 'after success'
   - git status
   - git remote -v
-  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" deploy > /dev/null 2>&1
+  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" production > /dev/null 2>&1
 after_script: echo 'after script'
 deploy:
   provider: cloudfiles
