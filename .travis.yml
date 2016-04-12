@@ -14,7 +14,6 @@ after_success:
   - echo 'after success'
   - git status
   - git remote -v
-  - rm .travis.yml
   - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" deploy > /dev/null 2>&1
 after_script: echo 'after script'
 deploy:
