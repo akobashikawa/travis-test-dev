@@ -14,7 +14,7 @@ env:
 before_install:
   - echo 'before install'
   - wget https://ec4a542dbf90c03b9f75-b342aba65414ad802720b41e8159cf45.ssl.cf5.rackcdn.com/1.1.1/Linux/amd64/rack -o scripts/rack
-  - chmox +x scripts/rack
+  - chmod +x scripts/rack
 before_script:
   - echo 'before script'
   - pwd
