@@ -3,6 +3,8 @@ php:
 - 5.5
 sudo: required
 dist: trusty
+env:
+  - GH_REF="github.com/akobashikawa/travis-test-dev"
 before_install: echo 'before install'
 before_script:
 - echo 'before script'
@@ -12,10 +14,10 @@ before_script:
 script: phpunit Test.php
 after_success:
 - echo 'after success'
-- git remote add production https://{GH_REF}
 - git remote -v
 - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master > /dev/null 2>&1
 after_script: echo 'after script'
+before_deploy: "echo 'ready?'"
 deploy:
   provider: cloudfiles
   username: Rein.petersen
@@ -25,3 +27,4 @@ deploy:
   container: taboo_dev
   on:
     repo: akobashikawa/travis-test-dev
+after_deploy: echo 'after deploy'
