@@ -13,8 +13,6 @@ env:
   - GH_REF="github.com/akobashikawa/travis-test-dev"
 before_install:
   - echo 'before install'
-  - wget https://ec4a542dbf90c03b9f75-b342aba65414ad802720b41e8159cf45.ssl.cf5.rackcdn.com/1.1.1/Linux/amd64/rack
-  - chmod -x rack
 before_script:
   - echo 'before script'
   - pwd
@@ -26,13 +24,11 @@ after_success:
   - git status
   - git remote -v
   - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" production > /dev/null 2>&1
+  - scripts/rack --username ${RACK_USER} --api-key ${RACK_KEY} --region ${RACK_REGION} servers instance list | grep new
 after_script: echo 'after script'
 deploy:
-  provider: cloudfiles
-  username: Rein.petersen
-  api_key:
-    secure: nXNgf5uUz6SFHA4CINxIDJpZvfAqsmsIAM1V/8a7ck1IAkI7HziueYoln9sd1OT/682jbHAiixqww6fnMlkYOo4rjYQ8OFreV/rjYL/hUv4mqbokm/5y1CRN7Ad+H5+L8Ea16AfrSbkqm+9kuDkaaZICmdmf56Axzmb7nZx8SNyE6L9haWAqdRhtGxDSG5py/HcYoxVEArVZ8FvnCe6lhXcZBFU1cgwrxl8rtQGNyeMCijMsF6vVL2qZqXK1cPoCLWKL6iy1Gp6lf9o2ETlOFFQ56YJzmSYkglD/LbrJ6C/Mtg86YifaNu3QSOby3GtzLioh9d5X2mju4MJN/HVgOVrxhgs2mbNdzd2iVwAA+trhKDeyhNqA90FYk3wY5jMsLE2SVaRJecvzYo+PS0yjcMb9uLu6FIcZKwzhYWVDGYYJe4pm7zW7x9aCRlUF4kcPotEUhgrEPCVV4D8TdlsAXBiFHk7oGSgnywewsgEn/yt8JxD1dgGFBAPQ228bcock07ENUhoHp/d48DxD85YZYgQ/EFTDfI810AJ/+q+0bjzkDfatXz81qxxsvWKeuajdptSR5LTv87rWvQFYQM79oyt3cnnSM86kuBwjmn2/x2ABLAH64Sep8Sd9xwxkz2FpYjTIK+9w90GLLExsS6a+Uz8Y8fgn3CWvGR7HSeBKtXM=
-  region: DFW
-  container: taboo_dev
+  provider: script
+  script: scripts/deploy.sh
   on:
     repo: akobashikawa/travis-test-dev
+    branch: develop
