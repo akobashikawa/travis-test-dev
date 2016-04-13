@@ -3,36 +3,16 @@ branches:
     - master
     - production
   only:
-    - /^develop(-.*)?$/
+    - develop
 language: php
 php:
   - 5.5
 sudo: required
 dist: trusty
-env:
-  - GH_REF="github.com/akobashikawa/travis-test-dev"
-before_install:
-  - echo 'before install'
-  - wget https://ec4a542dbf90c03b9f75-b342aba65414ad802720b41e8159cf45.ssl.cf5.rackcdn.com/1.1.1/Linux/amd64/rack
-  - chmod +x rack
-before_script:
-  - echo 'before script'
-  - pwd
-  - ls -a
-  - ls -a scripts
-  - git status
 script: phpunit Test.php
 after_success:
-  - echo 'after success'
-  - git status
-  - git remote -v
+  - wget https://ec4a542dbf90c03b9f75-b342aba65414ad802720b41e8159cf45.ssl.cf5.rackcdn.com/1.1.1/Linux/amd64/rack
+  - chmod +x rack
   - git checkout -b production
   - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" production > /dev/null 2>&1
-  - ./rack servers instance rebuild --name taboo.dev.total-apps.com.new --image-id 240da691-9a7a-4189-979a-33ba7741ccdf --admin-pass ${RACK_PASS} --username ${RACK_USER} --api-key ${RACK_KEY} --region ${RACK_REGION}
-after_script: echo 'after script'
-# deploy:
-#   provider: script
-#   script: scripts/deploy.sh
-#   on:
-#     repo: akobashikawa/travis-test-dev
-#     branch: develop
+  - ./rack servers instance rebuild --name taboo.dev.total-apps.com.new --image-id ${RACK_IMAGE_ID} --admin-pass ${RACK_PASS} --username ${RACK_USER} --api-key ${RACK_KEY} --region ${RACK_REGION}

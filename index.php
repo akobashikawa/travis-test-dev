@@ -6,9 +6,5 @@
 </head>
 <body>
   <h1>Travis Test</h1>
-  <?php
-  echo getenv('TEST_USER');
-  echo getenv('TEST_PASS');
-  ?>
 </body>
 </html>
